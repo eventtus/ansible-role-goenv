@@ -21,10 +21,10 @@ None
 
 ### Description
 
-  - goenv_user: System user to install goenv for.
-  - goenv_path: Install path.
-  - goenv_version: Version of goenv to install.
-  - goenv_versions: Array of versions of Go to install.
+  - `goenv_user`: System user to install goenv for.
+  - `goenv_path`: Install path.
+  - `goenv_version`: Version of goenv to install.
+  - `goenv_versions`: Array of versions of Go to install.
 
 ## Example Playbook
 
