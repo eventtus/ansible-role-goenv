@@ -1,0 +1,6 @@
+---
+  goenv_user: "ubuntu"
+  goenv_path: ".goenv"
+  goenv_version: "0.0.5"
+  goenv_versions:
+    - 1.6.1

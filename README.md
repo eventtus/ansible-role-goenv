@@ -1,0 +1,43 @@
+# Ansible Role for goenv
+
+An Ansible role that installs Goenv and Go on Ubuntu and Debian
+
+## Requirements
+
+None
+
+## Role Variables
+
+### Defaults
+
+    goenv_user: "ubuntu"
+    goenv_path: ".goenv"
+    goenv_version: "0.0.5"
+    goenv_versions:
+    - 1.6.1
+
+### Description
+
+  - goenv_user: System user to install goenv for.
+  - goenv_path: Install path.
+  - goenv_version: Version of goenv to install.
+  - goenv_versions: Array of versions of Go to install.
+
+## Example Playbook
+
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+
+    - hosts: servers
+      roles:
+      - role: eventtus.goenv
+        goenv_versions:
+        - 1.6.1
+        - 1.7.0
+
+## License
+
+MIT/BSD
+
+## Author
+
+This role was created in 2017 by [Omar Abdel-Wahab](https://github.com/owahab)

@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Omar Abdel-Wahab
+  description: Goenv Role
+  company: Eventtus
+  issue_tracker_url: https://github.com/eventtus/ansible-role-goenv/tracker
+  license: license (MIT)
+  min_ansible_version: 2.0
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  galaxy_tags:
+    - golang
+    - goenv
+    - go

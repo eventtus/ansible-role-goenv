@@ -1,0 +1,60 @@
+---
+- name: install required libraries
+  apt: name={{ item }} state=present
+  with_items:
+    - git-core
+    - curl
+    - build-essential
+
+- name: check if goenv is installed
+  stat:
+    path: /home/{{ user }}/{{ goenv_path }}
+  register: nvd
+
+- name: download {{ goenv_version }}
+  become_user: "{{ user }}"
+  when: nvd.stat.isdir is not defined
+  git:
+    repo: https://github.com/wfarr/goenv.git
+    dest: /home/{{ user }}/{{ goenv_path }}
+
+- name: create versions directory
+  become_user: "{{ user }}"
+  file:
+    path: /home/{{ user }}/{{ item }}
+    state: directory
+    mode: 0775
+  with_items:
+    - "{{ goenv_path }}/versions"
+
+- name: install {{ goenv_version }}
+  become_user: "{{ user }}"
+  lineinfile:
+    dest: .bashrc
+    line: "{{ item }}"
+  with_items:
+    - 'export PATH=~/{{ goenv_path }}/bin:$PATH'
+    - 'eval "$(goenv init -)"'
+
+- name: check installed versions
+  shell:
+    ls /home/{{ user }}/{{ goenv_path }}/versions
+  register: installed_nodes
+
+- set_fact:
+    nodes: "{{ goenv_versions | difference(installed_nodes.stdout_lines) }}"
+
+- name: install versions {{ nodes }}
+  become_user: "{{ user }}"
+  shell:
+    ~/{{ goenv_path }}/bin/goenv install "{{ item }}"
+  with_items: "{{ nodes }}"
+  when: nodes | length | int > 0
+
+- name: set global version to {{ goenv_versions | max }}
+  become_user: "{{ user }}"
+  lineinfile:
+    dest: /home/{{ user }}/{{ goenv_path }}/version
+    line: "{{ goenv_versions | max }}"
+    state: present
+    create: yes
