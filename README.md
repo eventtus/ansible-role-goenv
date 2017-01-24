@@ -1,5 +1,8 @@
 # Ansible Role for goenv
 
+[![Build Status](https://travis-ci.org/eventtus/ansible-role-goenv.svg?branch=master)](https://travis-ci.org/eventtus/ansible-role-goenv)
+[![GitHub issues](https://img.shields.io/github/issues/eventtus/ansible-role-goenv.svg?maxAge=2592000)](https://github.com/eventtus/ansible-role-goenv/issues)
+
 An Ansible role that installs Goenv and Go on Ubuntu and Debian
 
 ## Requirements
@@ -38,6 +41,8 @@ Including an example of how to use your role (for instance, with variables passe
 
 MIT/BSD
 
-## Author
+## Credits
 
-This role was created in 2017 by [Omar Abdel-Wahab](https://github.com/owahab)
+[![Eventtus](http://assets.eventtus.com/logos/eventtus/standard.png)](http://eventtus.com)
+
+Created by [Omar Abdel-Wahab](https://github.com/owahab) and sponsored by [Eventtus](http://eventtus.com).
