@@ -8,27 +8,27 @@
 
 - name: check if goenv is installed
   stat:
-    path: /home/{{ user }}/{{ goenv_path }}
+    path: /home/{{ goenv_user }}/{{ goenv_path }}
   register: nvd
 
 - name: download {{ goenv_version }}
-  become_user: "{{ user }}"
+  become_user: "{{ goenv_user }}"
   when: nvd.stat.isdir is not defined
   git:
     repo: https://github.com/wfarr/goenv.git
-    dest: /home/{{ user }}/{{ goenv_path }}
+    dest: /home/{{ goenv_user }}/{{ goenv_path }}
 
 - name: create versions directory
-  become_user: "{{ user }}"
+  become_user: "{{ goenv_user }}"
   file:
-    path: /home/{{ user }}/{{ item }}
+    path: /home/{{ goenv_user }}/{{ item }}
     state: directory
     mode: 0775
   with_items:
     - "{{ goenv_path }}/versions"
 
 - name: install {{ goenv_version }}
-  become_user: "{{ user }}"
+  become_user: "{{ goenv_user }}"
   lineinfile:
     dest: .bashrc
     line: "{{ item }}"
@@ -38,23 +38,23 @@
 
 - name: check installed versions
   shell:
-    ls /home/{{ user }}/{{ goenv_path }}/versions
+    ls /home/{{ goenv_user }}/{{ goenv_path }}/versions
   register: installed_nodes
 
 - set_fact:
     nodes: "{{ goenv_versions | difference(installed_nodes.stdout_lines) }}"
 
 - name: install versions {{ nodes }}
-  become_user: "{{ user }}"
+  become_user: "{{ goenv_user }}"
   shell:
     ~/{{ goenv_path }}/bin/goenv install "{{ item }}"
   with_items: "{{ nodes }}"
   when: nodes | length | int > 0
 
 - name: set global version to {{ goenv_versions | max }}
-  become_user: "{{ user }}"
+  become_user: "{{ goenv_user }}"
   lineinfile:
-    dest: /home/{{ user }}/{{ goenv_path }}/version
+    dest: /home/{{ goenv_user }}/{{ goenv_path }}/version
     line: "{{ goenv_versions | max }}"
     state: present
     create: yes
